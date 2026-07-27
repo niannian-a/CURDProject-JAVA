@@ -36,17 +36,24 @@
 </head>
 <body>
 <div>
+    当前登录用户：
+    <span th:text="${loginUsername}"></span>
+
+    <a href="/logout">退出登录</a>
     <h1 >这是用户列表页面</h1>
+
     <table>
         <thead>
         <tr>
             <th>ID</th>
             <th>用户名</th>
+            <th>姓名</th>
             <th>密码</th>
         <tbody>
         <tr th:each="user : ${list}">
             <td th:text="${user.userid}">1td>
             <td th:text="${user.username}">用户名td>
+            <td th:text="${user.name}">用户名td>
             <td th:text="${user.userPassword}">密码td>
         </tr>
         </tbody>
