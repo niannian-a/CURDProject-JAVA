@@ -1,5 +1,6 @@
 package com.example.curd.service.impl;
 
+import com.baomidou.mybatisplus.core.injector.methods.DeleteById;
 import com.baomidou.mybatisplus.spring.service.impl.ServiceImpl;
 import com.example.curd.entity.User;
 import com.example.curd.mapper.UserMapper;
@@ -56,6 +57,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return user;
     }
 
+
+
     /**
      * 根据用户名查询用户。
      */
@@ -65,6 +68,51 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         queryWrapper.eq(User::getUsername, username);
 
         return getOne(queryWrapper, false);
+    }
+    /**
+     * 更新用户。
+     */
+    public boolean updateUser(int userid, String username, String name, String password){
+        User preuser = getById(userid);
+        if(preuser==null){
+            return false;
+        }
+        if(username==null||username.trim().isEmpty()){
+            return false;
+        }
+
+        username = username.trim();
+        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(User::getUsername, username)
+                .ne(User::getUserid, userid);
+        User sameUsernameUser = getOne(wrapper, false);
+        if(sameUsernameUser!=null){
+            return false;
+        }
+
+        preuser.setUsername(username);
+
+        if(password !=null &&!password.isBlank()){
+            preuser.setUserPassword(passwordEncoder.encode(password));
+        }
+        return updateById(preuser);
+
+    }
+    /**
+     * id查找用户。
+     */
+    public User findUserById(int userid){
+        return getById(userid);
+    }
+    /**
+     * id删除用户。
+     */
+    public boolean deleteUserById(int userid) {
+        User user=getById(userid);
+        if(user ==null){
+            return false;
+        }
+        return removeById(userid);
     }
 }
 

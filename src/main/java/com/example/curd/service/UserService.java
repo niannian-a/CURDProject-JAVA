@@ -17,4 +17,8 @@ public interface UserService extends IService<User> {
      * @return 登录成功返回用户，登录失败返回 null
      */
     User login(String username, String password);
+
+    boolean deleteUserById(int userid);
+    boolean updateUser(int userid, String username, String name, String password);
+    User findUserById(int userid);
 }

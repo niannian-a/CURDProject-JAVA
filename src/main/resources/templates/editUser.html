@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>修改用户信息</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: Arial, "Microsoft YaHei", sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+
+        .form-container {
+            width: 420px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #1976d2;
+            outline: none;
+        }
+
+        input[readonly] {
+            background-color: #eeeeee;
+            color: #777;
+        }
+
+        .tip {
+            margin-top: 6px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .message {
+            padding: 11px;
+            margin-bottom: 18px;
+            border-radius: 5px;
+        }
+
+        .error-message {
+            color: #b71c1c;
+            background-color: #ffebee;
+            border: 1px solid #ef9a9a;
+        }
+
+        .button-area {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .save-button {
+            background-color: #1976d2;
+        }
+
+        .save-button:hover {
+            background-color: #125ea8;
+        }
+
+        .back-button {
+            background-color: #666;
+        }
+
+        .back-button:hover {
+            background-color: #444;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="form-container">
+
+    <h1>修改用户信息</h1>
+
+    <!-- 修改失败时显示错误信息 -->
+    <div th:if="${error}"
+         class="message error-message"
+         th:text="${error}">
+        修改失败
+    </div>
+
+    <form th:action="@{/user/update}"
+          method="post">
+
+        <!-- 用户ID：显示但不允许修改 -->
+        <div class="form-group">
+            <label for="userid">
+                用户ID
+            </label>
+
+            <input id="userid"
+                   type="text"
+                   th:value="${user.userid}"
+                   readonly>
+
+            <!-- 真正提交给Controller的用户ID -->
+            <input type="hidden"
+                   name="userid"
+                   th:value="${user.userid}">
+        </div>
+
+        <!-- 用户名 -->
+        <div class="form-group">
+            <label for="username">
+                用户名
+            </label>
+
+            <input id="username"
+                   name="username"
+                   type="text"
+                   th:value="${user.username}"
+                   minlength="3"
+                   maxlength="20"
+                   required>
+        </div>
+
+        <!-- 新密码 -->
+        <div class="form-group">
+            <label for="password">
+                新密码
+            </label>
+
+            <input id="password"
+                   name="password"
+                   type="password"
+                   minlength="6"
+                   maxlength="50">
+
+            <div class="tip">
+                不修改密码时，请保持此输入框为空。
+            </div>
+        </div>
+
+        <div class="button-area">
+            <a th:href="@{/index}"
+               class="button back-button">
+                返回列表
+            </a>
+
+            <button type="submit"
+                    class="button save-button">
+                保存修改
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
