@@ -98,6 +98,36 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return updateById(preuser);
 
     }
+
+    public boolean addUser(String username, String name, String password) {
+        /*  // 1. 查询用户名是否已经存在
+        User existingUser = getUserByUsername(username);
+
+        if (existingUser != null) {
+            return false;
+        }
+
+        // 2. 创建用户对象
+        User user = new User();
+        user.setUsername(username);
+
+        // 3. 加密密码
+        user.setUserPassword(passwordEncoder.encode(password));
+        //补充：添加名字
+        user.setName(name);
+        // 4. 保存到数据库
+        return save(user);*/
+        User existingUser = getUserByUsername(username);
+        if(existingUser!=null){
+            return false;
+        }
+        User user = new User();
+        user.setUsername(username);
+        user.setUserPassword(passwordEncoder.encode(password));
+        user.setName(name);
+        return save(user);
+
+    }
     /**
      * id查找用户。
      */
@@ -114,5 +144,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         return removeById(userid);
     }
+
+
 }
 

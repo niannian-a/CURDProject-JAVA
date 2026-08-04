@@ -89,6 +89,14 @@
             background-color: #125ea8;
         }
 
+        .add-button {
+            background-color: #a5d6a7;
+        }
+
+        .add-button:hover {
+            background-color: #a5d6a7;
+        }
+
         .delete-button {
             background-color: #d32f2f;
         }
@@ -200,6 +208,10 @@
                 <a class="button edit-button"
                    th:href="@{/user/edit(userid=${user.userid})}">
                     修改
+                </a>
+                <a class="button add-button"
+                   th:href="@{/user/add}">
+                    添加
                 </a>
 
                 <!-- 删除表单 -->
